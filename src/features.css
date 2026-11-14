@@ -1,0 +1,95 @@
+/* =====================================================================================
+   features.css: premium landmarks, structure placement, building designer, plot picker.
+   Loaded after index.css (see main.tsx), so it only adds to / refines the base styles.
+   ===================================================================================== */
+
+/* ---------- premium landmark buildings ---------- */
+.bsign{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;color:#fff;gap:0;overflow:hidden}
+.bsign b{font-size:12px;line-height:1;font-weight:400}
+.bsign span{font:800 10.5px/1.05 var(--landmark,var(--display));letter-spacing:.07em;white-space:nowrap;color:#fff4d6;text-shadow:0 1px 0 #000a,0 0 6px #e0b34188}
+.numeral{display:grid;place-items:center;height:100%;font:900 30px/1 var(--display);color:#fff7d6;text-shadow:0 2px 0 #0007,0 0 8px #fff6}
+.spinz{animation:zspin 7s linear infinite}
+.swingz{animation:zswing 9s ease-in-out infinite alternate}
+.pulsez{animation:zpulse 1.8s ease-in-out infinite}
+@keyframes zspin{to{transform:rotateZ(360deg)}}
+@keyframes zswing{from{transform:rotateZ(-32deg)}to{transform:rotateZ(28deg)}}
+@keyframes zpulse{0%,100%{transform:scale3d(1,1,.55)}50%{transform:scale3d(1,1,1)}}
+@keyframes zflat{to{transform:rotate(360deg)}}
+/* Time Machine portal ring: a glowing disc whose inner dashed ring and core keep spinning */
+.portal{display:block;border-radius:50%;border:6px solid #8fe6ff;background:radial-gradient(circle,#d6f8ff 0,#5fd4ff99 42%,#1d6a9a66 74%);box-shadow:0 0 18px #5fd4ff,inset 0 0 22px #5fd4ff}
+.portal-spin,.portal-core{position:absolute;border-radius:50%;display:block}
+.portal-spin{inset:6px;border:3px dashed #ffffffd0;animation:zflat 7s linear infinite}
+.portal-core{inset:24px;background:conic-gradient(#fff0,#fffb,#fff0,#8fe6ffcc,#fff0);animation:zflat 2.6s linear infinite reverse}
+
+/* ---------- placing a structure anywhere on the map ---------- */
+.ghost,.ghost-lift{pointer-events:none}
+.ghost-lift{animation:zbob 1.3s ease-in-out infinite alternate}
+@keyframes zbob{from{transform:translateZ(0)}to{transform:translateZ(6px)}}
+.ghost-foot{display:block;border-radius:10px;pointer-events:none}
+.ghost-foot.ok{border:3px dashed #3fe08a;background:#3fe08a38;box-shadow:0 0 14px #3fe08a88}
+.ghost-foot.bad{border:3px dashed #ff5a4a;background:#ff5a4a40;box-shadow:0 0 14px #ff5a4a88}
+.place-bar{position:absolute;left:50%;bottom:78px;transform:translateX(-50%);z-index:17;display:flex;gap:.7rem;align-items:center;background:#0b1630f2;color:#fff;border:2px solid var(--gold);border-radius:14px;padding:.6rem .9rem;max-width:94vw;box-shadow:0 8px 30px #0008;cursor:default}
+.place-txt{display:grid;gap:.12rem;min-width:0}
+.place-txt b{font:800 .8rem var(--display);letter-spacing:.05em;text-transform:uppercase}
+.place-txt span{font-size:.8rem;color:#cdd7e8}
+.place-bar .btn{white-space:nowrap}
+@media(max-width:700px){.place-bar{flex-wrap:wrap;bottom:150px;width:calc(100% - 20px)}.place-txt{flex-basis:100%}}
+.item-foot.struct{flex-wrap:wrap}
+.item-foot .acts{display:flex;gap:.35rem}
+
+/* ---------- new project: sticky 3D preview + designer + plot picker ---------- */
+.np-right{position:static}
+.np-preview{position:sticky;top:-1.2rem;z-index:4;padding-top:1.2rem;margin-top:-1.2rem;background:var(--cream)}
+.np-preview .bprev{margin-bottom:.6rem;height:230px}
+.bprev{position:relative;height:250px;perspective:900px;perspective-origin:50% 30%;border:3px solid #10213f;border-radius:14px;overflow:hidden;margin-bottom:.7rem}
+.bprev.night{background:linear-gradient(#0e1b3a,#1a3157 62%,#16301f 63%,#0f2418)}
+.bprev.day{background:linear-gradient(#78bdea,#d3ecf8 58%,#79b866 59%,#5c9b4d)}
+.bprev-world{position:absolute;left:50%;top:76%;width:0;height:0;transform-style:preserve-3d;animation:bspin 20s linear infinite}
+.bprev:hover .bprev-world{animation-play-state:paused}
+@keyframes bspin{from{transform:rotateX(58deg) rotateZ(0deg) scale3d(1.32,1.32,1.32)}to{transform:rotateX(58deg) rotateZ(360deg) scale3d(1.32,1.32,1.32)}}
+.bprev-pad{position:absolute;left:-130px;top:-110px;width:260px;height:220px;border-radius:22px;transform:translateZ(1px);background:radial-gradient(ellipse at 50% 40%,#ffffff1c,transparent 70%),#b8b4a6;box-shadow:inset 0 0 0 3px #ffffff30}
+.bprev.night .bprev-pad{background:radial-gradient(ellipse at 50% 40%,#ffffff10,transparent 70%),#303a4b}
+.bprev-tools{position:absolute;right:8px;top:8px;display:flex;gap:.3rem;z-index:2}
+.bprev-tools button{background:#0b1630cc;color:#fff;border:1px solid #fff3;border-radius:99px;padding:.2rem .6rem;font:700 .66rem var(--sans);cursor:pointer}
+.bprev-tools button.on{background:var(--gold);color:#0b1630}
+.bprev-tag{position:absolute;left:8px;bottom:8px;right:8px;z-index:2;display:flex;justify-content:space-between;gap:.5rem;align-items:flex-end;pointer-events:none}
+.bprev-tag span{background:#0b1630cc;color:#fff;font:600 .66rem var(--sans);padding:.15rem .6rem;border-radius:99px}
+
+.dz{display:grid;gap:1rem}
+.dz-row>b{display:flex;justify-content:space-between;align-items:baseline;font:800 .62rem var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:.45rem}
+.dz-row>b i{font:600 .72rem var(--mono);color:var(--blue);font-style:normal;letter-spacing:0}
+.dz-styles{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
+.dz-style{display:grid;gap:.1rem;justify-items:center;padding:.45rem .3rem;background:#fff;border:2px solid #c3ccda;border-bottom-width:4px;border-radius:10px;cursor:pointer;font:800 .58rem var(--display);letter-spacing:.05em;text-transform:uppercase}
+.dz-style span{font-size:1.15rem}
+.dz-style.on{background:var(--blue);border-color:#0a5f9e;color:#fff}
+.dz-presets{display:grid;grid-template-columns:repeat(6,1fr);gap:.4rem}
+.dz-preset{position:relative;height:36px;border-radius:9px;border:2px solid var(--line);cursor:pointer;background:linear-gradient(90deg,var(--w) 0 50%,var(--r) 50%);overflow:hidden;padding:0}
+.dz-preset::after{content:'';position:absolute;left:0;right:0;bottom:0;height:7px;background:var(--t)}
+.dz-preset.on{outline:3px solid var(--blue);outline-offset:1px}
+.dz-colors{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:.5rem;align-items:end;margin-top:.55rem}
+.dz-colors label{margin:0;gap:.25rem}
+.dz-colors input[type=color]{width:100%;height:34px;padding:2px;border-radius:8px;cursor:pointer}
+.dz-tints{display:flex;gap:.5rem;flex-wrap:wrap}
+.dz-tint{display:flex;align-items:center;gap:.4rem;padding:.25rem .7rem .25rem .3rem;background:#fff;border:2px solid #c3ccda;border-radius:99px;cursor:pointer;font:700 .72rem var(--sans)}
+.dz-tint i{width:18px;height:18px;border-radius:50%;background:var(--c);border:2px solid #fff;box-shadow:0 0 0 1.5px var(--line)}
+.dz-tint.on{border-color:var(--blue);background:#e8f3fc}
+.dz input[type=range]{width:100%;padding:0;border:0;background:none;box-shadow:none;accent-color:var(--blue);height:22px}
+.dz-toggles{display:flex;gap:.45rem;flex-wrap:wrap}
+.dz-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+
+.pk{display:grid;gap:.65rem}
+.pk-scroll{max-height:236px;overflow:auto;padding:.5rem;background:#d9cfb4;border:2px solid var(--line);border-radius:12px}
+.pk-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.45rem;margin-bottom:.45rem}
+.pk-row:last-child{margin-bottom:0}
+.pk-block{display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:3px;background:#a99f84;border-radius:9px}
+.pk-plot{position:relative;aspect-ratio:1.25;min-height:28px;display:grid;place-items:center;border:0;border-radius:6px;background:#c6e2b8;cursor:pointer;font-size:.95rem;line-height:1;padding:0}
+.pk-plot small{position:absolute;left:3px;top:1px;font:600 .5rem var(--mono);color:#3b5a33;opacity:.8}
+.pk-plot:hover:not(:disabled){background:#a6d68f}
+.pk-plot.park{background:#b3d9a2}
+.pk-plot.taken{background:#cdbfa0;cursor:not-allowed}
+.pk-plot.mine{background:var(--blue);color:#fff;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--blue)}
+.pk-plot.mine small{color:#fff}
+.pk-plot.here{box-shadow:inset 0 0 0 2px var(--orange)}
+.pk-legend{display:flex;gap:.9rem;flex-wrap:wrap;font-size:.74rem;color:var(--ink2)}
+.pk-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:.3rem;vertical-align:-1px}
+.pk-pick{display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap}
